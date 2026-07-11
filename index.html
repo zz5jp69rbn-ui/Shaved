@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenya Clean It</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #09090b; /* Pure Sleek Black */
+            --text-light: #ffffff;
+            --text-muted: #a1a1aa;
+            --purple-primary: #7c3aed; /* Vibrant Royal Purple */
+            --purple-glow: rgba(124, 58, 237, 0.15);
+            --green-accent: #22c55e; /* Crisp Emerald Green */
+            --green-glow: rgba(34, 197, 94, 0.15);
+            --card-bg: #18181b; /* Dark Charcoal Card Background */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 16px;
+            max-width: 450px;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        /* --- BUSINESS NAME --- */
+        .business-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 15px 0 20px 5px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        /* --- BRANDED PILL NAV BAR --- */
+        .nav-pill {
+            background: var(--card-bg);
+            border-radius: 40px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-link.active {
+            background: var(--purple-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        /* --- PAGE DISPLAY ENGINE --- */
+        .app-page {
+            display: none;
+            animation: fadeInPage 0.4s ease forwards;
+        }
+
+        .app-page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HOMEPAGE SPECIFIC STYLING --- */
+        .hero-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .headline-text {
+            font-size: 1.9rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .carousel-view {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .arrow-btn {
+            background: var(--purple-primary);
+            color: #ffffff;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+            flex-shrink: 0;
+        }
+
+        .image-frame {
+            width: 100%;
+            height: 240px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--card-bg);
+            position: relative;
+            border: 2px solid var(--purple-primary);
+        }
+
+        .carousel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .carousel-img.visible {
+            opacity: 1;
+        }
+
+        .dot-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active-dot {
+            background: var(--green-accent);
+            box-shadow: 0 0 8px var(--green-accent);
+        }
+
+        .about-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .rate-badge {
+            background: var(--green-glow);
+            color: var(--green-accent);
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 5px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .schedule-text {
+            font-weight: 700;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        /* --- SERVICES PAGE SPECIFIC STYLING --- */
+        .service-layout {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .service-item-block {
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            padding: 18px;
+            border-radius: 16px;
+            border-left: 4px solid var(--purple-primary);
+            border-top: 1px solid rgba(255,255,255,0.02);
+            border-right: 1px solid rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .service-item-block h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .service-item-block p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .graphic-container {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .rotating-star {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background: rgba(124, 58, 237, 0.06);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: slowSpin 25s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes slowSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .interactive-box {
+            width: 200px;
+            height: 200px;
+            background: #18181b;
+            border-radius: 24px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 2px solid var(--green-accent);
+        }
+
+        .fade-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .fade-img.active-fade {
+            opacity: 1;
+        }
+
+        .side-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            z-index: 2;
+        }
+        .label-before { left: -35px; color: var(--purple-primary); }
+        .label-after { right: -30px; color: var(--green-accent); }
+
+        .pill-switch-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+
+        .pill-switch {
+            width: 120px;
+            height: 34px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pill-button {
+            width: 54px;
+            height: 28px;
+            background: var(--purple-primary);
+            border-radius: 16px;
+            position: absolute;
+            left: 3px;
+            transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.4);
+        }
+
+        .pill-switch.flipped .pill-button {
+            left: 63px;
+            background: var(--green-accent);
+            box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);
+        }
+
+        /* --- CONTACT & SCHEDULING INTERFACE --- */
+        .contact-entry-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .contact-row-entry {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: var(--text-light);
+            background: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.2s;
+        }
+
+        .contact-row-entry:active {
+            border-color: var(--purple-primary);
+        }
+
+        .entry-icon {
+            font-size: 1.3rem;
+            color: var(--purple-primary);
+        }
+
+        .entry-data {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .scheduler-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 24px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+
+        .scheduler-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: #09090b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px;
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--purple-primary);
+        }
+
+        /* Premium Action Stack Buttons */
+        .action-button-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn-action-primary {
+            width: 100%;
+            background: var(--purple-primary);
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .btn-action-secondary {
+            width: 100%;
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid var(--green-accent);
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-action-primary:active, .btn-action-secondary:active {
+            transform: scale(0.98);
+        }
+
+        /* --- REVIEWS PAGE SPECIFIC STYLING --- */
+        .placeholder-badge-box {
+            background: var(--card-bg);
+            border: 2px dashed rgba(124, 58, 237, 0.3);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .placeholder-badge-box h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green-accent);
+            margin-bottom: 8px;
+        }
+
+        .placeholder-badge-box p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRIMARY HEADER -->
+    <div class="business-title">Kenya Clean It</div>
+
+    <!-- BRANDED NAVIGATION DECK -->
+    <nav class="nav-pill">
+        <div class="nav-link active" onclick="navigate('home')">Homepage</div>
+        <div class="nav-link" onclick="navigate('services')">Services</div>
+        <div class="nav-link" onclick="navigate('contact')">Contact</div>
+        <div class="nav-link" onclick="navigate('reviews')">Reviews</div>
+    </nav>
+
+    <!-- PAGE 1: HOMEPAGE -->
+    <section id="page-home" class="app-page active-page">
+        <div class="hero-layout">
+            <h1 class="headline-text">TOP Premium Cleaning in the Area</h1>
+            
+            <div class="carousel-view">
+                <button class="arrow-btn" onclick="shiftCarousel(-1)">❬</button>
+                <div class="image-frame">
+                    <img src="IMG_1298.jpg" class="carousel-img visible" alt="Clean Space 1">
+                    <img src="IMG_1297.jpg" class="carousel-img" alt="Clean Space 2">
+                    <img src="IMG_1300.jpg" class="carousel-img" alt="Clean Space 3">
+                </div>
+                <button class="arrow-btn" onclick="shiftCarousel(1)">❭</button>
+            </div>
+
+            <div class="dot-indicators">
+                <div class="dot active-dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <p class="about-text">Premium residential, commercial, and Airbnb cleaning solutions utilizing professional staging workflows to keep your properties immaculate.</p>
+            
+            <div class="rate-badge">Our Commitment: $40/hr per Cleaner</div>
+            <p class="about-text" style="text-align: center; font-style: italic;">We operate under an absolute closure mandate: we do not leave until the space is cleaned to flawless satisfaction.</p>
+            
+            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 10px 0;">
+            
+            <p class="schedule-text">📅 Hours: Mon-Sat: 9:00 AM - 8:00 PM</p>
+            <p class="schedule-text" style="color: #ef4444;">📅 Sun: Closed</p>
+        </div>
+    </section>
+
+    <!-- PAGE 2: SERVICES -->
+    <section id="page-services" class="app-page">
+        <div class="service-layout">
+            <div class="service-item-block">
+                <h3>Residential Cleaning</h3>
+                <p>Meticulous maintenance layouts for houses, apartments, and private living spaces built completely around your occupancy schedules.</p>
+            </div>
+
+            <div class="service-item-block">
+                <h3>Commercial Clean Management</h3>
+                <p>Sanitary engineering tailored to high-traffic workspace environments to optimize safety and clean presentation.</p>
+            </div>
+
+            <div class="service-item-block">
+                <h3>Airbnb & Vacation Rentals</h3>
+                <p>High-turnover fast response cycles ensuring top-tier staging results for arriving guest check-ins.</p>
+            </div>
+
+            <div class="service-item-block">
+                <h3>Move-In / Move-Out Cleans</h3>
+                <p>Comprehensive restoration deep cleans designed to secure rental deposit returns or prep real estate listings.</p>
+            </div>
+
+            <div class="service-item-block">
+                <h3>Intensive Deep Cleans</h3>
+                <p>Heavy detailed custom layouts focusing on hidden build-up zones and thorough environment disinfection.</p>
+            </div>
+
+            <div class="service-item-block">
+                <h3>Emergency Priority Clean</h3>
+                <p>Rapid response immediate dispatch systems for unexpected incidents or urgent clean requests.</p>
+            </div>
+
+            <!-- ANIMATED STAR BACKGROUND IMAGE SYSTEM -->
+            <div class="graphic-container">
+                <div class="rotating-star"></div>
+                <div class="side-label label-before">BEFORE</div>
+                
+                <div class="interactive-box">
+                    <img id="img-before-state" src="IMG_1300.jpg" class="fade-img active-fade" alt="Before look">
+                    <img id="img-after-state" src="IMG_1298.jpg" class="fade-img" alt="After look">
+                </div>
+
+                <div class="side-label label-after">AFTER</div>
+            </div>
+
+            <!-- CLICKABLE BEFORE/AFTER SWITCH -->
+            <div class="pill-switch-wrap">
+                <div class="pill-switch" onclick="toggleBeforeAfter(this)">
+                    <div class="pill-button"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3: CONTACT & INTEGRATED LIVE SCHEDULER -->
+    <section id="page-contact" class="app-page">
+        <div class="contact-entry-grid">
+            <a href="tel:3858422926" class="contact-row-entry">
+                <div class="entry-icon">📞</div>
+                <div class="entry-data">(385) 842-2926</div>
+            </a>
+            
+            <a href="mailto:kenyacleanit25@gmail.com" class="contact-row-entry">
+                <div class="entry-icon">✉️</div>
+                <div class="entry-data">kenyacleanit25@gmail.com</div>
+            </a>
+
+            <!-- DYNAMIC INTERACTIVE DISPATCH SCHEDULER -->
+            <div class="scheduler-card">
+                <h3>Book An Appointment</h3>
+                <form id="bookingForm" onsubmit="event.preventDefault();">
+                    <div class="form-group">
+                        <label for="clientName">Your Name</label>
+                        <input type="text" id="clientName" class="form-control" placeholder="Enter full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceProfile">Service Type</label>
+                        <select id="serviceProfile" class="form-control" style="background: #09090b;" required>
+                            <option value="Residential Cleaning">Residential Cleaning</option>
+                            <option value="Commercial Clean Management">Commercial Workspace</option>
+                            <option value="Airbnb Rental Portfolio">Airbnb / Vacation Rental</option>
+                            <option value="Move-In / Move-Out Sweep">Move-In / Move-Out</option>
+                            <option value="Deep Clean Structural Focus">Intensive Deep Clean</option>
+                            <option value="Emergency Priority Clean">Emergency Priority Clean</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bookingTime">Preferred Date & Time</label>
+                        <input type="datetime-local" id="bookingTime" class="form-control" required>
+                    </div>
+
+                    <div class="action-button-stack">
+                        <button type="button" class="btn-action-primary" onclick="triggerEmailDispatch()">Email Booking Details</button>
+                        <button type="button" class="btn-action-secondary" onclick="triggerSMSDispatch()">Text (SMS) Booking Details</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 4: REVIEWS -->
+    <section id="page-reviews" class="app-page">
+        <div class="placeholder-badge-box">
+            <h3>Growing business, reviews coming soon!</h3>
+            <p>Check back shortly to see verified transformations from property owners in your area.</p>
+        </div>
+    </section>
+
+    <script>
+        // NAVIGATION ENGINE
+        function navigate(targetId) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.innerText.toLowerCase() === targetId) {
+                    link.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('.app-page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            document.getElementById(`page-${targetId}`).classList.add('active-page');
+            window.scrollTo(0, 0);
+        }
+
+        // CAROUSEL MANAGER
+        let currentIdx = 0;
+        const images = document.querySelectorAll('.carousel-img');
+        const dots = document.querySelectorAll('.dot');
+
+        function shiftCarousel(direction) {
+            if(images.length === 0) return;
+            images[currentIdx].classList.remove('visible');
+            dots[currentIdx].classList.remove('active-dot');
+
+            currentIdx = (currentIdx + direction + images.length) % images.length;
+
+            images[currentIdx].classList.add('visible');
+            dots[currentIdx].classList.add('active-dot');
+        }
+
+        // BEFORE-AFTER IMAGE TOGGLE FRAMEWORK
+        function toggleBeforeAfter(switchElement) {
+            switchElement.classList.toggle('flipped');
+            
+            const beforeImg = document.getElementById('img-before-state');
+            const afterImg = document.getElementById('img-after-state');
+
+            if(switchElement.classList.contains('flipped')) {
+                beforeImg.classList.remove('active-fade');
+                afterImg.classList.add('active-fade');
+            } else {
+                afterImg.classList.remove('active-fade');
+                beforeImg.classList.add('active-fade');
+            }
+        }
+
+        // DATA CAPTURE AND FORM VALIDATION UTILITY
+        function collectAndValidateForm() {
+            const nameEl = document.getElementById('clientName');
+            const serviceEl = document.getElementById('serviceProfile');
+            const timeEl = document.getElementById('bookingTime');
+
+            if (!nameEl.value || !timeEl.value) {
+                alert("Please complete all form inputs to auto-populate your request details.");
+                return null;
+            }
+
+            const humanDate = new Date(timeEl.value).toLocaleString();
+
+            return {
+                name: nameEl.value,
+                service: serviceEl.value,
+                time: humanDate
+            };
+        }
+
+        // AUTOMATED APPOINTMENT EMAIL ROUTER
+        function triggerEmailDispatch() {
+            const formPayload = collectAndValidateForm();
+            if (!formPayload) return;
+
+            const mailboxTarget = "kenyacleanit25@gmail.com";
+            const subjectLine = encodeURIComponent(`Booking Request: ${formPayload.service}`);
+            const bodyMessage = encodeURIComponent(
+                `Hello Kenya Clean It Support,\n\n` +
+                `I would like to request an official service appointment slot:\n\n` +
+                `• Client Name: ${formPayload.name}\n` +
+                `• Service Selected: ${formPayload.service}\n` +
+                `• Requested Timeline: ${formPayload.time}\n\n` +
+                `Please get back to me to finalize my scheduled setup. Thank you!`
+            );
+
+            window.location.href = `mailto:${mailboxTarget}?subject=${subjectLine}&body=${bodyMessage}`;
+        }
+
+        // AUTOMATED APPOINTMENT SMS TEXT MESSAGING ROUTER
+        function triggerSMSDispatch() {
+            const formPayload = collectAndValidateForm();
+            if (!formPayload) return;
+
+            const trackingNumber = "+13858422926";
+            const textContent = encodeURIComponent(
+                `Hello Kenya Clean It! I'd like to book an appointment:\n\n` +
+                `• Name: ${formPayload.name}\n` +
+                `• Service: ${formPayload.service}\n` +
+                `• Time: ${formPayload.time}\n\n` +
+                `Please let me know your next open slot!`
+            );
+
+            window.location.href = `sms:${trackingNumber}?body=${textContent}`;
+        }
+    </script>
+</body>
+</html>
